@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>MCU SIMULATOR</title>
+    <!--<script src='/socket.io/socket.io.js'></script>-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.5/socket.io.js'></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(function(){
+        var socket = io();
+        socket.on('update_neopixel', function(data){
+          $('#left_r').val(data[0]);
+          $('#left_g').val(data[1]);
+          $('#left_b').val(data[2]);
+          $('#right_r').val(data[3]);
+          $('#right_g').val(data[4]);
+          $('#right_b').val(data[5]);
+          $('#n_left_r').text(data[0]);
+          $('#n_left_g').text(data[1]);
+          $('#n_left_b').text(data[2]);
+          $('#n_right_r').text(data[3]);
+          $('#n_right_g').text(data[4]);
+          $('#n_right_b').text(data[5]);
+        });
+       
+        socket.on('update_battery', function(data){
+          $('#battery').text(data);
+        });
+
+        socket.on('update_device', function(data){
+          $('#pir').text(data[0]);
+          $('#touch').text(data[1]);
+          $('#dc').text(data[2]);
+          $('#button').text(data[3]);
+        });
+
+        $('#left_r').on('input', function(){
+          var v = $('#left_r').val();
+          $('#n_left_r').text(v);
+          socket.emit('set_neopixel', {idx:0, value:v});
+        });
+        $('#left_g').on('input', function(){
+          var v = $('#left_g').val();
+          $('#n_left_g').text(v);
+          socket.emit('set_neopixel', {idx:1, value:v});
+        });
+        $('#left_b').on('input', function(){
+          var v = $('#left_b').val();
+          $('#n_left_b').text(v);
+          socket.emit('set_neopixel', {idx:2, value:v});
+        });
+        $('#right_r').on('input', function(){
+          var v = $('#right_r').val();
+          $('#n_right_r').text(v);
+          socket.emit('set_neopixel', {idx:3, value:v});
+        });
+        $('#right_g').on('input', function(){
+          var v = $('#right_g').val();
+          $('#n_right_g').text(v);
+          socket.emit('set_neopixel', {idx:4, value:v});
+        });
+        $('#right_b').on('input', function(){
+          var v = $('#right_b').val();
+          $('#n_right_b').text(v);
+          socket.emit('set_neopixel', {idx:5, value:v});
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h2>MCU Simulator</h2>
+    <table style="width:100%;margin-left:auto;margin-right:auto;text-align:center;">
+      <tr>
+        <th>
+          Type
+        </th>
+        <th colspan="2">
+          Value
+        </th>
+      </tr>
+      <tr>
+        <td>
+          Neopixel
+        </td>
+        <td>
+          (<i>Right Eye</i>)<br>
+          R:<input type='range'  id='left_r' value='0' min='0' step='5' max='255' />
+	  <span id='n_left_r'></span><br>
+          G:<input type='range'  id='left_g' value='0' min='0' step='5' max='255' />
+	  <span id='n_left_g'></span><br>
+          B:<input type='range'  id='left_b' value='0' min='0' step='5' max='255' />
+	  <span id='n_left_b'></span>
+        </td>
+        <td>
+          (<i>Left Eye</i>)<br>
+          R:<input type='range' id='right_r' value='0' min='0' step='5' max='255' />
+	  <span id='n_right_r'></span><br>
+          G:<input type='range' id='right_g' value='0' min='0' step='5' max='255' />
+	  <span id='n_right_g'></span><br>
+          B:<input type='range' id='right_b' value='0' min='0' step='5' max='255' />
+	  <span id='n_right_b'></span><br>
+        </td>
+      </tr>
+      <tr>
+        <td>Battery</td>
+        <td colspan="2"><span id='battery'></span></td>
+      </tr>
+      <tr>
+        <td>DC JACK</td>
+        <td colspan="2"><span id='dc'></span></td>
+      </tr>
+      <tr>
+        <td>Button</td>
+        <td colspan="2"><span id='button'></span></td>
+      </tr>
+      <tr>
+        <td>PIR</td>
+        <td colspan="2"><span id='pir'></span></td>
+      </tr>
+      <tr>
+        <td>Touch</td>
+        <td colspan="2"><span id='touch'></span></td>
+      </tr>
+    </table>
+  </body>
+</html>
