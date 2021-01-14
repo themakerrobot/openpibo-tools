@@ -183,9 +183,11 @@
     </script>
   </head>
   <body>
-    <h2>Motion Creator</h2>
+    <div style="border-radius:10px/10px;text-align:center;background:#9ffafa;">
+      <h2>모션 생성 프로그램</h2>
+    </div>
     <div style="width:98%;border:1px dotted; padding:10px;">
-      <caption><i><b>Timeline</b></i></caption><br>
+      <caption><i><b>타임라인</b></i></caption><br>
       <div style="float:left;">0ms</div>
       <div style="float:right;">20000ms</div>
       <input type='range' id='timeline' min='0' max='20000' step='50' value='0' style="width:100%;" />
@@ -193,8 +195,8 @@
     <br>
     <table style="width:98%;horizontal-align:center">
       <tr>
-	<td> <i>Simulator</i> </td>
-	<td> <i>Sequence - NS(Not Set)</i> </td>
+	<td> <i>시뮬레이터</i> </td>
+	<td> <i>시쿼스 - NS(Not Set)</i> </td>
       </tr>
       <tr>
         <td style="vertical-align:top">
@@ -310,8 +312,8 @@
         </td>
       </tr>
       <tr>
-        <td> <i>Code Generator</i><br>
-	Motion Name: <input type='text' id='export_val' /> <button id='export_bt'>export</button>
+        <td> <i>코드 생성</i><br>
+	모션 이름: <input type='text' id='export_val' /> <button id='export_bt'>export</button>
 	</td>
       </tr>
       <tr>

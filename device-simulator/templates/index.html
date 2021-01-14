@@ -70,40 +70,52 @@
     </script>
   </head>
   <body>
-    <h2>MCU Simulator</h2>
-    <table border=1>
-      <tr>
-        <td>
-          Neopixel
-        </td>
-        <td>
-          (<i>Right Eye</i>)<br>
-          R:<input type='range'  id='left_r' value='0' min='0' step='5' max='255' />
-	  <span id='n_left_r'></span><br>
-          G:<input type='range'  id='left_g' value='0' min='0' step='5' max='255' />
-	  <span id='n_left_g'></span><br>
-          B:<input type='range'  id='left_b' value='0' min='0' step='5' max='255' />
-	  <span id='n_left_b'></span>
-        </td>
-        <td>
-          (<i>Left Eye</i>)<br>
-          R:<input type='range' id='right_r' value='0' min='0' step='5' max='255' />
-	  <span id='n_right_r'></span><br>
-          G:<input type='range' id='right_g' value='0' min='0' step='5' max='255' />
-	  <span id='n_right_g'></span><br>
-          B:<input type='range' id='right_b' value='0' min='0' step='5' max='255' />
-	  <span id='n_right_b'></span><br>
-        </td>
-      </tr>
-    </table>
-
-<i>MCU Status</i>
-<pre>
-Battery: <span id='battery'></span>
-DC JACK: <span id='dc'></span>
-Button: <span id='button'></span>
-PIR: <span id='pir'></span>
-Touch:<span id='touch'></span>
-</pre>
+  <div style="width:600px;border-radius:10px/10px;text-align:center;background:#9ffafa;">
+    <h2> 디바이스 제어하기</h2>
+  </div>
+  <table border=1 style="width:600px;">
+    <tr>
+      <th colspan="2"><i>눈 색상 조절하기</i></th>
+      <th colspan="2"><i>디바이스 상태 정보</i></th>
+    </tr>
+    <tr>
+      <td rowspan="5">
+        (<i>Right Eye</i>)<br>
+        R:<input type='range'  id='left_r' value='0' min='0' step='5' max='255' />
+        <span id='n_left_r'></span><br>
+        G:<input type='range'  id='left_g' value='0' min='0' step='5' max='255' />
+        <span id='n_left_g'></span><br>
+        B:<input type='range'  id='left_b' value='0' min='0' step='5' max='255' />
+        <span id='n_left_b'></span>
+      </td>
+      <td rowspan="5">
+        (<i>Left Eye</i>)<br>
+        R:<input type='range' id='right_r' value='0' min='0' step='5' max='255' />
+        <span id='n_right_r'></span><br>
+        G:<input type='range' id='right_g' value='0' min='0' step='5' max='255' />
+        <span id='n_right_g'></span><br>
+        B:<input type='range' id='right_b' value='0' min='0' step='5' max='255' />
+        <span id='n_right_b'></span><br>
+      </td>
+      <td>Battery:</td>
+      <td style="width:75px;"><span id='battery'></span></td>
+    </tr>
+    <tr>
+      <td>DC JACK:</td>
+      <td><span id='dc'></span></td>
+    </tr>
+    <tr>
+      <td>Button:</td>
+      <td><span id='button'></span></td>
+    </tr>
+    <tr>
+      <td>PIR sensor:</td>
+      <td><span id='pir'></span></td>
+    </tr>
+    <tr>
+      <td>Touch sensor:</td>
+      <td><span id='touch'></span></td>
+    </tr>
+  </table>
 </body>
 </html>
