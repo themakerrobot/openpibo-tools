@@ -1,0 +1,15 @@
+{
+  "name": "servo",
+  "version": "0.9.0",
+  "description": "Node.js Addons Servo",
+  "main": "ioctl.js",
+  "private": true,
+  "dependencies": {
+    "bindings": "~1.2.1",
+    "node-addon-api": "^1.0.0"
+  },
+  "scripts": {
+    "install": "node-gyp rebuild"
+  },
+  "gypfile": true
+}

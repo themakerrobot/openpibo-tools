@@ -1,0 +1,324 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>MOTION Creator</title>
+    <script src='/socket.io/socket.io.js'></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(function(){
+        var socket = io();
+        $('#time_val').val('0');
+
+        $('#timeline').on('input', function(){
+          $('#time_val').val($('#timeline').val());
+        });
+        $('#time_val').click(function(){
+          $('#timeline').val($('#time_val').val());
+        });
+
+        // setting motor
+        $('#m_ht_range').on('input', function(){
+          var pos = $('#m_ht_range').val();
+          $('#m_ht_val').val(pos);
+          socket.emit('set_pos', {type:'ht', pos:pos});
+        });
+        $('#m_hp_range').on('input', function(d){
+          var pos = $('#m_hp_range').val()
+          $('#m_hp_val').val(pos)
+          socket.emit('set_pos', {type:'hp', pos:pos});
+        });
+        $('#m_rh_range').on('input', function(d){
+          var pos = $('#m_rh_range').val()
+          $('#m_rh_val').val(pos)
+          socket.emit('set_pos', {type:'rh', pos:pos});
+        });
+        $('#m_ra_range').on('input', function(d){
+          var pos = $('#m_ra_range').val()
+          $('#m_ra_val').val(pos)
+          socket.emit('set_pos', {type:'ra', pos:pos});
+        });
+        $('#m_lh_range').on('input', function(d){
+          var pos = $('#m_lh_range').val()
+          $('#m_lh_val').val(pos)
+          socket.emit('set_pos', {type:'lh', pos:pos});
+        });
+        $('#m_la_range').on('input', function(d){
+          var pos = $('#m_la_range').val()
+          $('#m_la_val').val(pos)
+          socket.emit('set_pos', {type:'la', pos:pos});
+        });
+        $('#m_rl_range').on('input', function(d){
+          var pos = $('#m_rl_range').val()
+          $('#m_rl_val').val(pos)
+          socket.emit('set_pos', {type:'rl', pos:pos});
+        });
+        $('#m_ll_range').on('input', function(d){
+          var pos = $('#m_ll_range').val()
+          $('#m_ll_val').val(pos)
+          socket.emit('set_pos', {type:'ll', pos:pos});
+        });
+        $('#m_rf_range').on('input', function(d){
+          var pos = $('#m_rf_range').val()
+          $('#m_rf_val').val(pos)
+          socket.emit('set_pos', {type:'rf', pos:pos});
+        });
+        $('#m_lf_range').on('input', function(d){
+          var pos = $('#m_lf_range').val()
+          $('#m_lf_val').val(pos)
+          socket.emit('set_pos', {type:'lf', pos:pos});
+        });
+
+        // input
+        $('#m_ht_val').click(function(){
+          var pos = $('#m_ht_val').val();
+          $('#m_ht_range').val(pos);
+          socket.emit('set_pos', {type:'ht', pos:pos});
+        });
+        $('#m_hp_val').click(function(){
+          var pos = $('#m_hp_val').val();
+          $('#m_hp_range').val(pos);
+          socket.emit('set_pos', {type:'hp', pos:pos});
+        });
+        $('#m_rh_val').click(function(){
+          var pos = $('#m_rh_val').val();
+          $('#m_rh_range').val(pos);
+          socket.emit('set_pos', {type:'rh', pos:pos});
+        });
+        $('#m_ra_val').click(function(){
+          var pos = $('#m_ra_val').val();
+          $('#m_ra_range').val(pos);
+          socket.emit('set_pos', {type:'ra', pos:pos});
+        });
+        $('#m_lh_val').click(function(){
+          var pos = $('#m_lh_val').val();
+          $('#m_lh_range').val(pos);
+          socket.emit('set_pos', {type:'lh', pos:pos});
+        });
+        $('#m_la_val').click(function(){
+          var pos = $('#m_la_val').val();
+          $('#m_la_range').val(pos);
+          socket.emit('set_pos', {type:'la', pos:pos});
+        });
+        $('#m_rl_val').click(function(){
+          var pos = $('#m_rl_val').val();
+          $('#m_rl_range').val(pos);
+          socket.emit('set_pos', {type:'rl', pos:pos});
+        });
+        $('#m_rf_val').click(function(){
+          var pos = $('#m_rf_val').val();
+          $('#m_rf_range').val(pos);
+          socket.emit('set_pos', {type:'rf', pos:pos});
+        });
+        $('#m_ll_val').click(function(){
+          var pos = $('#m_ll_val').val();
+          $('#m_ll_range').val(pos);
+          socket.emit('set_pos', {type:'ll', pos:pos});
+        });
+        $('#m_lf_val').click(function(){
+          var pos = $('#m_lf_val').val();
+          $('#m_lf_range').val(pos);
+          socket.emit('set_pos', {type:'lf', pos:pos});
+        });
+
+        $('#add_frame_bt').click(function(){
+           var arr = [
+             $('#m_rf_val').val()==''?999:$('#m_rf_val').val(),
+             $('#m_rl_val').val()==''?999:$('#m_rl_val').val(),
+             $('#m_ra_val').val()==''?999:$('#m_ra_val').val(),
+             $('#m_rh_val').val()==''?999:$('#m_rh_val').val(),
+             $('#m_hp_val').val()==''?999:$('#m_hp_val').val(),
+             $('#m_ht_val').val()==''?999:$('#m_ht_val').val(),
+             $('#m_lf_val').val()==''?999:$('#m_lf_val').val(),
+             $('#m_ll_val').val()==''?999:$('#m_ll_val').val(),
+             $('#m_la_val').val()==''?999:$('#m_la_val').val(),
+             $('#m_lh_val').val()==''?999:$('#m_lh_val').val()
+           ];
+           socket.emit('add_frame', {time:$('#time_val').val(), pos_arr:arr});
+        });
+        $('#delete_frame_bt').click(function(){
+           socket.emit('delete_frame', $('#time_val').val());
+        });
+        $('#init_frame_bt').click(function(){
+           socket.emit('init_frame', ''); 
+        });
+        $('#play_frame_bt').click(function(){
+    socket.emit('play_frame', $('#play_cycle_val').val());
+        });
+        $('#disp_frame_bt').click(function(){
+           socket.emit('disp_frame', '');
+        });
+        $('#export_bt').click(function(){
+           socket.emit('export', $('#export_val').val());
+        });
+
+        socket.on('disp_code', function(d){
+          $('#code').text(d);
+        });
+
+        socket.on('disp_record', function(d){
+          console.log(d);
+          let data = d.data;
+          $('#record_table > tbody').empty();
+          for(var i=0; i < data.length;i++){
+            $('#record_table').append(
+              $('<tr>').append(
+                $('<td>').append(data[i].seq +' ms'),
+                $('<td>').append(data[i].d[0]==999?'NS':data[i].d[0]),
+                $('<td>').append(data[i].d[1]==999?'NS':data[i].d[1]),
+                $('<td>').append(data[i].d[2]==999?'NS':data[i].d[2]),
+                $('<td>').append(data[i].d[3]==999?'NS':data[i].d[3]),
+                $('<td>').append(data[i].d[4]==999?'NS':data[i].d[4]),
+                $('<td>').append(data[i].d[5]==999?'NS':data[i].d[5]),
+                $('<td>').append(data[i].d[6]==999?'NS':data[i].d[6]),
+                $('<td>').append(data[i].d[7]==999?'NS':data[i].d[7]),
+                $('<td>').append(data[i].d[8]==999?'NS':data[i].d[8]),
+                $('<td>').append(data[i].d[9]==999?'NS':data[i].d[9]),
+              )
+            );
+          }
+       });
+      });
+    </script>
+  </head>
+  <body>
+    <h2>Motion Creator</h2>
+    <div style="width:98%;border:1px dotted; padding:10px;">
+      <caption><i><b>Timeline</b></i></caption><br>
+      <div style="float:left;">0ms</div>
+      <div style="float:right;">20000ms</div>
+      <input type='range' id='timeline' min='0' max='20000' step='50' value='0' style="width:100%;" />
+    </div>
+    <br>
+    <table style="width:98%;horizontal-align:center">
+      <tr>
+	<td> <i>Simulator</i> </td>
+	<td> <i>Sequence - NS(Not Set)</i> </td>
+      </tr>
+      <tr>
+        <td style="vertical-align:top">
+          <input type='number' id='time_val' min='0' max='20000' step='50'/> ms - 
+          <button id='delete_frame_bt'>삭제</button><button id='add_frame_bt'>저장</button>
+          <table style="font-size:11 pt;">
+            <tr>
+              <td>
+              </td>
+              <td colspan="2" align="center">
+                (5)Head Tilt<br>
+                <input type='range' id='m_ht_range' min='-25' max='25' /><br>
+                <input type='number' id='m_ht_val' min='-25' max='25' />
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+              </td>
+              <td colspan="2" align="center">
+                (4)Head Pan<br>
+                <input type='range' id='m_hp_range' min='-50' max='50' /><br>
+                <input type='number' id='m_hp_val' min='-50' max='50' />
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                (3)Right Hand<br>
+                <input type='range' id='m_rh_range' min='-30' max='30' /><br>
+                <input type='number' id='m_rh_val' min='-30' max='30' />
+              </td>
+              <td align="center">
+                (2)Right Arm<br>
+                <input type='range' id='m_ra_range' min='-80' max='80' /><br>
+                <input type='number' id='m_ra_val' min='-80' max='80' />
+              </td>
+              <td align="center">
+                (8)Left Arm<br>
+                <input type='range' id='m_la_range' min='-80' max='80' /><br>
+                <input type='number' id='m_la_val' min='-80' max='80' />
+              </td>
+              <td align="center">
+                (9)Left Hand<br>
+                <input type='range' id='m_lh_range' min='-30' max='30' /><br>
+                <input type='number' id='m_lh_val' min='-30' max='30' />
+              </td>
+            </tr>
+            <tr>
+              <td>
+              </td>
+              <td align="center">
+                (1)Right Leg<br>
+                <input type='range' id='m_rl_range' min='-35' max='35' /><br>
+                <input type='number' id='m_rl_val' min='-35' max='35' />
+              </td>
+              <td align="center">
+                (7)Left Leg<br>
+                <input type='range' id='m_ll_range' min='-35' max='35' /><br>
+                <input type='number' id='m_ll_val' min='-35' max='35' />
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+              </td>
+              <td align="center">
+                (0)Right Foot<br>
+                <input type='range' id='m_rf_range' min='-25' max='25' /><br>
+                <input type='number' id='m_rf_val' min='-25' max='25' />
+              </td>
+              <td align="center">
+                (6)Left Foot<br>
+                <input type='range' id='m_lf_range' min='-25' max='25' /><br>
+                <input type='number' id='m_lf_val' min='-25' max='25' />
+              </td>
+              <td> 
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td rowspan="3" style="vertical-align:top">
+          cycle: <input type='number' id='play_cycle_val' min='1' max='100' value='1' /> -
+          <button id='play_frame_bt'>재생</button> / 
+          <button id='init_frame_bt'>초기화</button>
+          <button id='disp_frame_bt'>조회</button>
+          <br><br>
+          <table id="record_table" border="1" align="center" style="border:1px solid;font-size:11 pt;">
+            <thead>
+              <tr>
+                <td><b>Time</b></td>
+                <td><b>Motor0</b></td>
+                <td><b>Motor1</b></td>
+                <td><b>Motor2</b></td>
+                <td><b>Motor3</b></td>
+                <td><b>Motor4</b></td>
+                <td><b>Motor5</b></td>
+                <td><b>Motor6</b></td>
+                <td><b>Motor7</b></td>
+                <td><b>Motor8</b></td>
+                <td><b>Motor9</b></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="11"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td> <i>Code Generator</i><br>
+	Motion Name: <input type='text' id='export_val' /> <button id='export_bt'>export</button>
+	</td>
+      </tr>
+      <tr>
+        <td style="vertical-align:top">
+          <textarea id='code' cols='100%' rows='20' wrap='hard'></textarea>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
