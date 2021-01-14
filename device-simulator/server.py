@@ -16,7 +16,6 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 
 from queue import Queue
-import logging
 
 system_value = ['','','','']
 neopixel_value = [0,0,0,0,0,0]
@@ -24,7 +23,6 @@ obj = cDevice()
 next_cmd = [False, ""]
 que = Queue()
 app = Flask(__name__)
-app.logger.setLevel(logging.DEBUG)
 socketio = SocketIO(app)
 
 def send_message(code, data=""):
@@ -79,7 +77,7 @@ def update():
       decode_pkt(data)
       battery_check_time = time.time()
 
-    time.sleep(0.1)
+    time.sleep(0.01)
 
 @app.route('/')
 def sessions():

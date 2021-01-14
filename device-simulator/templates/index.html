@@ -71,15 +71,7 @@
   </head>
   <body>
     <h2>MCU Simulator</h2>
-    <table style="width:100%;margin-left:auto;margin-right:auto;text-align:center;">
-      <tr>
-        <th>
-          Type
-        </th>
-        <th colspan="2">
-          Value
-        </th>
-      </tr>
+    <table border=1>
       <tr>
         <td>
           Neopixel
@@ -103,26 +95,15 @@
 	  <span id='n_right_b'></span><br>
         </td>
       </tr>
-      <tr>
-        <td>Battery</td>
-        <td colspan="2"><span id='battery'></span></td>
-      </tr>
-      <tr>
-        <td>DC JACK</td>
-        <td colspan="2"><span id='dc'></span></td>
-      </tr>
-      <tr>
-        <td>Button</td>
-        <td colspan="2"><span id='button'></span></td>
-      </tr>
-      <tr>
-        <td>PIR</td>
-        <td colspan="2"><span id='pir'></span></td>
-      </tr>
-      <tr>
-        <td>Touch</td>
-        <td colspan="2"><span id='touch'></span></td>
-      </tr>
     </table>
-  </body>
+
+<i>MCU Status</i>
+<pre>
+Battery: <span id='battery'></span>
+DC JACK: <span id='dc'></span>
+Button: <span id='button'></span>
+PIR: <span id='pir'></span>
+Touch:<span id='touch'></span>
+</pre>
+</body>
 </html>
