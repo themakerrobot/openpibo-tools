@@ -1,5 +1,5 @@
 + 파일 리스트
-  - creator.js
+  - main.js
     + 모션 생성 관련 서버 파일 (기본 포트:8888) 
   - index.html
     + 모션 생성 관련 View 파일(html)
