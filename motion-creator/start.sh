@@ -2,4 +2,4 @@
 
 PORT=8888
 
-sudo node creator/creator.js $PORT
+sudo node creator/main.js $PORT
