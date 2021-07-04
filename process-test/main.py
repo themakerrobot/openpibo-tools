@@ -27,6 +27,7 @@ from oled.oledlib import cOled
 from audio.audiolib import cAudio
 from motion.motionlib import cMotion
 from device.devicelib import cDevice
+from vision.visionlib import cCamera
 
 def oled():
   oled_obj.set_font(size=30)
@@ -62,8 +63,14 @@ def mic():
   audio_obj.stop()
 
 def camera():
-  cmd = "raspistill -hf -vf -o test.jpg"
-  os.system(cmd)
+  img = camera_obj.read()
+  img = camera_obj.convert_img(img)
+  camera_obj.imwrite("test.jpg", img)
+  oled_obj.draw_image("test.jpg")
+  oled_obj.show()
+  time.sleep(5)
+  oled_obj.clear()
+  oled_obj.show()
 
 def neopixel():
   device_obj.send_raw("#20:255,0,0!")
@@ -100,36 +107,41 @@ def mcu():
 if __name__ == "__main__":
 
   items = {
-    'oled':{"f":oled, "state":"ready"},
-    'audio':{"f":audio, "state":"ready"},
-    'motor':{"f":motor, "state":"ready"},
-    'mic':{"f":mic, "state":"ready"},
-    'camera':{"f":camera, "state":"ready"},
-    'neopixel':{"f":neopixel, "state":"ready"},
-    'mcu':{"function":mcu, "state":"ready"},
+    'oled':{"_func":oled, "state":"ready"},
+    'audio':{"_func":audio, "state":"ready"},
+    'motor':{"_func":motor, "state":"ready"},
+    'mic':{"_func":mic, "state":"ready"},
+    'camera':{"_func":camera, "state":"ready"},
+    'neopixel':{"_func":neopixel, "state":"ready"},
+    'mcu':{"_func":mcu, "state":"ready"},
   }
 
   oled_obj = cOled(conf=cfg)
   audio_obj = cAudio()
   motion_obj = cMotion(conf=cfg)
   device_obj = cDevice()
+  camera_obj = cCamera()
 
   while True:
     os.system('clear')
-    print("====================HARDWARD_TEST====================")
-    print(" - oled                             ...", items['oled']['state'])
-    print(" - audio                            ...", items['audio']['state'])
-    print(" - motor                            ...", items['motor']['state'])
-    print(" - mic                              ...", items['mic']['state'])
-    print(" - camera                           ...", items['camera']['state'])
-    print(" - neopixel                         ...", items['neopixel']['state'])
-    print(" - mcu(pir|touch|button|dc|battery) ...", items['mcu']['state'])
-    print("=====================================================")
-    cmd = input("Input > ")
-  
+    print("=====================HARDWARD_TEST=====================")
+    print(" - oled                               ...", items['oled']['state'])
+    print(" - audio                              ...", items['audio']['state'])
+    print(" - motor                              ...", items['motor']['state'])
+    print(" - mic                                ...", items['mic']['state'])
+    print(" - camera                             ...", items['camera']['state'])
+    print(" - neopixel                           ...", items['neopixel']['state'])
+    print(" - mcu: (pir|touch|button|dc|battery) ...", items['mcu']['state'])
+    print("=======================================================")
+    print('## "quit" to exit')
+    cmd = input('Input(oled|audio|motor|mic|camera|neopixel|mcu) > ')
+
+    if cmd == "quit":
+      break
+
     if cmd in items:
       print("{} Testing ...".format(cmd.upper()))
-      items[cmd]['f']()
+      items[cmd]['_func']()
       items[cmd]['state'] = "done"
       print("{} ... PASS".format(cmd.upper()))
     else:
